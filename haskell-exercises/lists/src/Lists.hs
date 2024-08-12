@@ -41,16 +41,25 @@ difference (x : xs) ys
   | otherwise = x : difference xs ys
 
 insert :: Int -> [Int] -> [Int]
-insert = error "Implement it"
+insert x [] = [x]
+insert x (y : ys)
+  | x < y = x : y : ys
+  | otherwise = y : insert x ys
 
 insertionSort :: [Int] -> [Int]
-insertionSort = error "Implement it"
+insertionSort [] = []
+insertionSort [x] = [x]
+insertionSort (x : xs) = insert x (insertionSort xs)
 
 binaryToDecimal :: [Int] -> Int
-binaryToDecimal = error "Implement it"
+binaryToDecimal xs = sum [a * i | (a, i) <- zip (reverse xs) powers]
+  where
+    powers = [2 ^ i | i <- [0 ..]]
 
 toDecimal :: Int -> [Int] -> Int
-toDecimal = error "Implement it"
+toDecimal base xs = sum [a * i | (a, i) <- zip (reverse xs) powers]
+  where
+    powers = [base ^ i | i <- [0 ..]]
 
 toDec :: Int -> String -> Int
 toDec base s = error "Implement it"
