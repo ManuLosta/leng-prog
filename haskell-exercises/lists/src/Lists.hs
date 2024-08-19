@@ -52,28 +52,36 @@ insertionSort [x] = [x]
 insertionSort (x : xs) = insert x (insertionSort xs)
 
 binaryToDecimal :: [Int] -> Int
-binaryToDecimal xs = sum [a * i | (a, i) <- zip (reverse xs) powers]
-  where
-    powers = [2 ^ i | i <- [0 ..]]
+binaryToDecimal [] = 0
+binaryToDecimal (x : xs) = x * 2 ^ length xs + binaryToDecimal xs
 
 toDecimal :: Int -> [Int] -> Int
-toDecimal base xs = sum [a * i | (a, i) <- zip (reverse xs) powers]
-  where
-    powers = [base ^ i | i <- [0 ..]]
+toDecimal _ [] = 0
+toDecimal base (x : xs) = x * base ^ length xs + binaryToDecimal xs
 
 toDec :: Int -> String -> Int
-toDec base s = error "Implement it"
+toDec base s = toDecimal base (map digitToInt s)
 
 -- Same as `toDec` But use a list comprehension
 
 decimal :: Int -> String -> Int
-decimal = error "Implement it"
+decimal base s = sum [digitToInt a * i | (a, i) <- zip (reverse s) powers]
+  where
+    powers = [base ^ i | i <- [0 ..]]
 
 firsts :: [a] -> [[a]]
-firsts = error "Implement it"
+firsts [] = []
+firsts (x : xs) = [x] : map (x :) (firsts xs)
 
 -- Given two String that represents numbers in binary implement the 'binaryAdd' function
 -- DO NOT USE a predefined '+' operation
 
+toBinary :: Int -> String
+toBinary 0 = ""
+toBinary n
+  | n `mod` 2 == 1 = toBinary (n `div` 2) ++ "1"
+  | otherwise = toBinary (n `div` 2) ++ "0"
+
 binaryAdd :: String -> String -> String
-binaryAdd = error "Implement it"
+binaryAdd "" "" = "0"
+binaryAdd a b = toBinary (toDec 2 a + toDec 2 b)
