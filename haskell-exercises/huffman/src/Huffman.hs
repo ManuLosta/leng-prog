@@ -1,19 +1,18 @@
-module Huffman  (huffmanTrie, encode, decode, Trie(..), Bit(..)) where
+module Huffman (huffmanTrie, encode, decode) where
 
-import qualified Data.Map as M 
+import Bits (Bits)
+import qualified Data.Map as M
+import Frequencies (Frequency, frequencies)
+import Trie
 
-data Bit = F | T deriving (Eq, Show)
-type Bits = [Bit]  
-
-data Trie a = Empty
-            | Leaf a
-            | Trie a :-: Trie a deriving (Eq, Show, Ord)
-
-huffmanTrie::String -> Trie Char
-huffmanTrie input =  error "Implement it"
+huffmanTrie :: String -> Trie Char
+huffmanTrie input = buildTrie (frequencies input)
+  where
+    buildTrie :: [Frequency] -> Trie Char
+    buildTrie (n : m : ts) = ()
 
 encode :: String -> Trie Char -> Bits
 encode input code = error "Implement it"
-  
-decode::Bits -> Trie Char -> String
+
+decode :: Bits -> Trie Char -> String
 decode bits trie = error "Implement it"
